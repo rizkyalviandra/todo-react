@@ -1,25 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense } from "react";
+import { HomeContainer } from "./modules/Home";
+import useTodoStore from "./stores/useTodoStore";
 
 function App() {
+  const { setTodos } = useTodoStore();
+
+  React.useEffect(() => {
+    fetch(`https://virtserver.swaggerhub.com/hanabyan/todo/1.0.0/to-do-list`)
+      .then((res) => res.json())
+      .then((data) => setTodos(data));
+  }, [setTodos]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <HomeContainer />
+    </Suspense>
   );
 }
 
