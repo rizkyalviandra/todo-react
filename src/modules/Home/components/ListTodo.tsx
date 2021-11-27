@@ -1,5 +1,6 @@
 import { Button, Divider, List, Switch, Typography } from "antd";
 import React from "react";
+import useTodoStore from "../../../stores/useTodoStore";
 
 type Props = {
   todos: any;
@@ -9,6 +10,7 @@ type Props = {
 };
 
 const ListTodo = ({ todos, onClick, isDone, onDelete }: Props) => {
+  const { setTodoId } = useTodoStore();
   return (
     <List
       itemLayout='horizontal'
@@ -17,13 +19,14 @@ const ListTodo = ({ todos, onClick, isDone, onDelete }: Props) => {
         <List.Item
           id={item.id}
           style={{ cursor: "pointer" }}
+          onClick={() => setTodoId(item.id)}
           actions={[
             item.status === 0 ? (
-              <Button type='text' onClick={isDone}>
+              <Button id={item.id} type='text' onClick={isDone}>
                 Done
               </Button>
             ) : null,
-            <Button type='text' onClick={onDelete}>
+            <Button id={item.id} type='text' onClick={onDelete}>
               Delete
             </Button>,
           ]}

@@ -23,14 +23,14 @@ const HomeContainer = () => {
   });
 
   const [form] = useForm<TodoFormValue>();
-  const { todos, addTodo, updateTodo, completedTodo } = useTodoStore();
+  const { todos, addTodo, updateTodo, completedTodo, deleteTodo, todoId } =
+    useTodoStore();
   const [id, setId] = React.useState<number>(0);
 
   async function onFinish(values: TodoFormValue) {
     if (formModal.id === 0) {
       await addTodo(values);
     } else {
-      console.log("edit =>");
       await updateTodo(parseInt(formModal.id), values);
     }
     setFormModal({
@@ -69,7 +69,8 @@ const HomeContainer = () => {
               .filter((x: any) => x.status === 0)
               .sort((a: any, b: any) => a.createdAt - b.createdAt)}
             onClick={(e: any) => openEditForm(e.target.id)}
-            isDone={(e: any) => completedTodo(e.target.id)}
+            isDone={(e: any) => completedTodo(todoId)}
+            onDelete={(e: any) => deleteTodo(todoId)}
           />
         </Tabs.TabPane>
         <Tabs.TabPane tab='Done' key='2'>

@@ -2,6 +2,8 @@ import create from "zustand";
 
 const useTodoStore = create((set: any) => ({
   todos: [],
+  todoId: 0,
+  setTodoId: (id: number) => set(() => ({ todoId: id })),
   setTodos: (todos: any) => set({ todos }),
   addTodo: (todoText: any) =>
     set((state: any) => ({
@@ -21,7 +23,7 @@ const useTodoStore = create((set: any) => ({
     })),
   deleteTodo: (id: number) =>
     set((state: any) => ({
-      todos: state.todos.filter((todo: any) => todo.id !== id),
+      todos: state.todos.filter((todo: any) => todo.id != id),
     })),
   updateTodo: (id: number, todo: Object) =>
     set((state: any) => ({
@@ -30,7 +32,7 @@ const useTodoStore = create((set: any) => ({
   completedTodo: (id: number) =>
     set((state: { todos: any[] }) => ({
       todos: state.todos.map((todo: { id: number }) => {
-        if (todo.id === id) {
+        if (todo.id == id) {
           return {
             ...todo,
             status: 1,
