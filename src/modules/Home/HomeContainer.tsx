@@ -15,7 +15,7 @@ const HomeContainer = () => {
   const [formModal, setFormModal] = React.useState<{
     isOpen: boolean;
     mode: "create" | "edit" | null;
-    id: number;
+    id: any;
   }>({
     isOpen: false,
     mode: null,
@@ -30,7 +30,8 @@ const HomeContainer = () => {
     if (formModal.id === 0) {
       await addTodo(values);
     } else {
-      await updateTodo(formModal.id, values);
+      console.log("edit =>");
+      await updateTodo(parseInt(formModal.id), values);
     }
     setFormModal({
       isOpen: false,
@@ -64,14 +65,18 @@ const HomeContainer = () => {
       <Tabs defaultActiveKey='1' centered>
         <Tabs.TabPane tab='Progress' key='1'>
           <ListTodo
-            todos={todos.filter((x: any) => x.status === 0)}
+            todos={todos
+              .filter((x: any) => x.status === 0)
+              .sort((a: any, b: any) => a.createdAt - b.createdAt)}
             onClick={(e: any) => openEditForm(e.target.id)}
             isDone={(e: any) => completedTodo(e.target.id)}
           />
         </Tabs.TabPane>
         <Tabs.TabPane tab='Done' key='2'>
           <ListTodo
-            todos={todos.filter((x: any) => x.status === 1)}
+            todos={todos
+              .filter((x: any) => x.status === 1)
+              .sort((a: any, b: any) => b.createdAt - a.createdAt)}
             onClick={(e: any) => openEditForm(e.target.id)}
           />
         </Tabs.TabPane>

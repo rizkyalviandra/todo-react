@@ -18,9 +18,11 @@ const ListTodo = ({ todos, onClick, isDone, onDelete }: Props) => {
           id={item.id}
           style={{ cursor: "pointer" }}
           actions={[
-            <Button type='text' onClick={isDone}>
-              Done
-            </Button>,
+            item.status === 0 ? (
+              <Button type='text' onClick={isDone}>
+                Done
+              </Button>
+            ) : null,
             <Button type='text' onClick={onDelete}>
               Delete
             </Button>,

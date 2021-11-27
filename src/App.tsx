@@ -3,7 +3,7 @@ import { HomeContainer } from "./modules/Home";
 import useTodoStore from "./stores/useTodoStore";
 
 function App() {
-  const { setTodos } = useTodoStore();
+  const { setTodos, todos } = useTodoStore();
 
   React.useEffect(() => {
     fetch(`https://virtserver.swaggerhub.com/hanabyan/todo/1.0.0/to-do-list`)
